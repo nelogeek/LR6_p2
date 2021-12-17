@@ -46,6 +46,23 @@ void pushHeap(Node*& root, int val)
 	}
 }
 
+void preorderTree(Node* p, int l) {
+
+	if (p) {
+
+		for (int i = 0; i < l; i++) cout << ' '; //вывод отступов
+
+		cout << p->d << endl;         //вывод значения из вершины     
+
+   // рекурсивный вызов увеличивает номер уровня
+
+		preorderTree(p->left, l + 1);
+
+		preorderTree(p->right, l + 1);
+
+	}
+
+}
 
 void buildHeap(Node* root, int* N, int size)
 {
@@ -53,6 +70,13 @@ void buildHeap(Node* root, int* N, int size)
 	{
 		pushHeap(root, N[i]);
 	}
+}
+
+void print(Node* root, int* N, int size) {
+	for (int i = size-1; i >= 0; i--) {
+		cout << N[i] << "\n";
+	}
+	//cout << endl;
 }
 
 
@@ -69,24 +93,19 @@ void popHeap(Node*& root, int* N, int size)
 void heapify(int arr[], int n, int i)
 {
 	int largest = i;
-	// Инициализируем наибольший элемент как корень
 	int l = 2 * i + 1; // левый = 2*i + 1
 	int r = 2 * i + 2; // правый = 2*i + 2
 
- // Если левый дочерний элемент больше корня
 	if (l < n && arr[l] > arr[largest])
 		largest = l;
 
-	// Если правый дочерний элемент больше, чем самый большой элемент на данный момент
 	if (r < n && arr[r] > arr[largest])
 		largest = r;
 
-	// Если самый большой элемент не корень
 	if (largest != i)
 	{
 		swap(arr[i], arr[largest]);
 
-		// Рекурсивно преобразуем в двоичную кучу затронутое поддерево
 		heapify(arr, n, largest);
 	}
 }
@@ -130,6 +149,7 @@ int main()
 		cin >> N[i];
 	}
 	buildHeap(root, N, size);
+	print(root, N, size);
 	peekHeap(N);
 	heapSort(N, size);
 	peekHeap(N);
